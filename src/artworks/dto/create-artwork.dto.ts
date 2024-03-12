@@ -4,14 +4,17 @@ import {
   IsJSON,
   MaxLength,
   IsOptional,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
+import { CreateImageDto } from './create-image.dto';
 
 export class CreateArtworkDto {
   @IsNumber()
-  user_id: number;
+  museum_id: number;
 
   @IsNumber()
-  museum_id: number;
+  artwork_id: number;
 
   @IsString()
   @MaxLength(500)
@@ -23,9 +26,6 @@ export class CreateArtworkDto {
 
   @IsString()
   date: string;
-
-  @IsString()
-  image_url: string;
 
   @IsOptional()
   @IsString()
@@ -46,4 +46,12 @@ export class CreateArtworkDto {
   @IsOptional()
   @IsString()
   culture: string;
+
+  @IsOptional()
+  @IsJSON()
+  styles: JSON;
+
+  @ValidateNested()
+  @Type(() => CreateImageDto)
+  image: CreateImageDto;
 }

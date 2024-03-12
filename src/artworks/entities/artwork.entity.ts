@@ -1,5 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+} from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
+import { Image } from './image.entity';
 
 @Entity({ name: 'artworks' })
 export class Artwork {
@@ -21,24 +29,30 @@ export class Artwork {
   @Column()
   date: string;
 
-  @Column()
-  image_url: string;
-
-  @Column()
-  culture: string;
-
-  @Column()
+  @Column({ nullable: true, default: null })
   artwork_type: string;
 
-  @Column()
+  @Column('json', { nullable: true, default: null })
+  classification: any;
+
+  @Column({ nullable: true, default: null })
   medium: string;
 
-  @Column('json')
+  @Column('json', { nullable: true, default: null })
   colors: any;
 
-  @Column('json')
-  classification: any;
+  @Column({ nullable: true, default: null })
+  culture: string;
+
+  @Column('json', { nullable: true, default: null })
+  styles: any;
 
   @ManyToOne(() => User, (user) => user.artworks, { onDelete: 'CASCADE' })
   user: User;
+
+  @OneToOne(() => Image, (image) => image.artwork, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn()
+  image: Image;
 }

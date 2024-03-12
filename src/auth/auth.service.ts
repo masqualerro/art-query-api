@@ -25,4 +25,15 @@ export class AuthService {
       user: user,
     };
   }
+
+  async isTokenExpired(token: string): Promise<boolean> {
+    try {
+      const decoded = await this.jwtService.verifyAsync(token);
+      const expirationTime = decoded['exp'] * 1000; // Expiration time is in seconds, convert to milliseconds
+      const currentTime = new Date().getTime();
+      return expirationTime < currentTime;
+    } catch (error) {
+      return true;
+    }
+  }
 }

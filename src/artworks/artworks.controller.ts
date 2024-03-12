@@ -3,14 +3,12 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   ParseIntPipe,
 } from '@nestjs/common';
 import { ArtworksService } from './artworks.service';
 import { CreateArtworkDto } from './dto/create-artwork.dto';
-import { UpdateArtworkDto } from './dto/update-artwork.dto';
 
 @Controller('artworks')
 export class ArtworksController {
@@ -39,13 +37,8 @@ export class ArtworksController {
     return this.artworksService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateArtworkDto: UpdateArtworkDto) {
-    return this.artworksService.update(+id, updateArtworkDto);
-  }
-
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.artworksService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.artworksService.remove(id);
   }
 }
