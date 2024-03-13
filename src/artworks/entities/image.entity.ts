@@ -10,10 +10,10 @@ export class Image {
   @Column()
   artwork_id: number;
 
-  @Column()
+  @Column({ length: 1000 })
   imageUrl: string;
 
-  @Column()
+  @Column({ length: 300 })
   imageAlt: string;
 
   @Column()
