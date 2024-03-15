@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { ArtworksModule } from './artworks/artworks.module';
 import { AuthModule } from './auth/auth.module';
+import { ArtworkInsightsModule } from './artwork-insights/artwork-insights.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     ArtworksModule,
     AuthModule,
+    ArtworkInsightsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
