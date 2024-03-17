@@ -7,6 +7,10 @@ import { UsersModule } from './users/users.module';
 import { ArtworksModule } from './artworks/artworks.module';
 import { AuthModule } from './auth/auth.module';
 import { ArtworkInsightsModule } from './artwork-insights/artwork-insights.module';
+import { User } from './users/entities/user.entity';
+import { Artwork } from './artworks/entities/artwork.entity';
+import { ArtworkInsight } from './artwork-insights/entities/artwork-insight.entity';
+import { Image } from './artworks/entities/image.entity';
 
 @Module({
   imports: [
@@ -21,7 +25,7 @@ import { ArtworkInsightsModule } from './artwork-insights/artwork-insights.modul
         username: configService.get<string>('DATABASE_USER'),
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
-        autoLoadEntities: true,
+        entities: [User, Artwork, ArtworkInsight, Image],
         synchronize: configService.get<string>('NODE_ENV') !== 'production',
       }),
     }),
