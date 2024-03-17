@@ -26,7 +26,7 @@ import { Image } from './artworks/entities/image.entity';
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
         entities: [User, Artwork, ArtworkInsight, Image],
-        synchronize: configService.get<string>('NODE_ENV') !== 'production',
+        synchronize: true,
       }),
     }),
     UsersModule,
