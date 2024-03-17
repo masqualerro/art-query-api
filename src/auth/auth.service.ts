@@ -27,6 +27,7 @@ export class AuthService {
   }
 
   async isTokenExpired(token: string): Promise<boolean> {
+    token = token.replace('Bearer ', ''); // Remove 'Bearer ' prefix
     try {
       const decoded = await this.jwtService.verifyAsync(token);
       const expirationTime = decoded['exp'] * 1000; // Expiration time is in seconds, convert to milliseconds

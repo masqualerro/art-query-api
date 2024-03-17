@@ -33,13 +33,6 @@ export class AuthController {
   @Public()
   @Get('is-token-expired')
   async isTokenExpired(@Request() req) {
-    const isTokenExpired = await this.authService.isTokenExpired(
-      req.headers.authorization,
-    );
-    if (isTokenExpired) {
-      return { expired: isTokenExpired, message: 'Token is expired' };
-    } else {
-      return { expired: isTokenExpired, message: 'Token is active' };
-    }
+    return await this.authService.isTokenExpired(req.headers.authorization);
   }
 }

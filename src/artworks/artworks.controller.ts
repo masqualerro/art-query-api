@@ -32,6 +32,11 @@ export class ArtworksController {
     return this.artworksService.findAllByUser(userId);
   }
 
+  @Get('map/:userId')
+  mapIds(@Param('userId', ParseIntPipe) userId: number) {
+    return this.artworksService.mapId(userId);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.artworksService.findOne(+id);

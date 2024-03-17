@@ -50,6 +50,18 @@ export class ArtworksService {
     });
   }
 
+  async mapId(userId: number) {
+    const user = await this.usersRepository.findOne({ where: { id: userId } });
+    if (!user) {
+      throw new NotFoundException('User does not exist');
+    }
+    const artworks = await this.artworksRepository.find({
+      where: { user: user },
+      select: ['artwork_id'], // Select only the 'artwork_id' column
+    });
+    return artworks.map((artwork) => artwork.artwork_id); // Return an array of 'artwork_id's
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} artwork`;
   }
