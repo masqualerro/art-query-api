@@ -66,7 +66,16 @@ export class ArtworksService {
     return `This action returns a #${id} artwork`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+    const artwork = await this.artworksRepository.findOne({
+      where: { id: id },
+      relations: ['image'],
+    });
+
+    if (artwork.image) {
+      await this.imagesRepository.delete(artwork.image.id);
+    }
+
     return this.artworksRepository.delete(id);
   }
 }

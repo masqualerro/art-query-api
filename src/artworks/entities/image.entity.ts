@@ -22,8 +22,6 @@ export class Image {
   @Column()
   imageHeight: number;
 
-  @OneToOne(() => Artwork, (artwork) => artwork.image, {
-    onDelete: 'CASCADE',
-  })
+  @OneToOne(() => Artwork, (artwork) => artwork.image)
   artwork: Artwork;
 }

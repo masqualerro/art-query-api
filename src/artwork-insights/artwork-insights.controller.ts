@@ -10,7 +10,21 @@ export class ArtworkInsightsController {
   @Get('colors/:userId')
   async getArtworkColorInsights(
     @Param('userId', ParseIntPipe) userId: number,
-  ): Promise<any[]> {
-    return this.artworkInsightsService.getArtworkColorInsights(userId);
+  ): Promise<{ insights: any[]; total: number }> {
+    const insights =
+      await this.artworkInsightsService.getArtworkColorInsights(userId);
+    return {
+      insights: insights.colorInsights,
+      total: insights.totalFrequency,
+    };
+  }
+
+  @Get('culture/:userId')
+  async getArtworkCultureInsights(
+    @Param('userId', ParseIntPipe) userId: number,
+  ): Promise<{ insights: any[]; total: number }> {
+    const insights =
+      await this.artworkInsightsService.getArtworkCultureInsights(userId);
+    return insights;
   }
 }

@@ -50,9 +50,7 @@ export class Artwork {
   @ManyToOne(() => User, (user) => user.artworks, { onDelete: 'CASCADE' })
   user: User;
 
-  @OneToOne(() => Image, (image) => image.artwork, {
-    onDelete: 'CASCADE',
-  })
+  @OneToOne(() => Image, (image) => image.artwork, { onDelete: 'CASCADE' })
   @JoinColumn()
   image: Image;
 }

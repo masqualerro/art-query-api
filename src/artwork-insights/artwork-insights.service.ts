@@ -38,7 +38,9 @@ export class ArtworkInsightsService {
     return closestColorName;
   }
 
-  async getArtworkColorInsights(userId: number): Promise<any[]> {
+  async getArtworkColorInsights(
+    userId: number,
+  ): Promise<{ colorInsights: any[]; totalFrequency: number }> {
     const artworks = await this.artworksService.findAllByUser(userId);
 
     const colorMap = new Map();
@@ -95,6 +97,38 @@ export class ArtworkInsightsService {
 
     colorInsights.sort((a, b) => b.frequency - a.frequency);
 
-    return colorInsights;
+    const totalFrequency = colorInsights.reduce(
+      (total, colorInfo) => total + colorInfo.frequency,
+      0,
+    );
+
+    return { colorInsights, totalFrequency };
+  }
+
+  async getArtworkCultureInsights(userId: number): Promise<any> {
+    const artworks = await this.artworksService.findAllByUser(userId);
+
+    const cultureMap = new Map();
+
+    for (const artwork of artworks) {
+      const culture = artwork.culture;
+      const cultureInfo = cultureMap.get(culture) || {
+        frequency: 0,
+      };
+
+      cultureInfo.frequency += 1;
+
+      cultureMap.set(culture, cultureInfo);
+    }
+
+    const cultureInsights = Array.from(cultureMap.entries()).map(
+      ([culture, cultureInfo]) => {
+        return { culture, ...cultureInfo };
+      },
+    );
+
+    cultureInsights.sort((a, b) => b.frequency - a.frequency);
+
+    return cultureInsights;
   }
 }
