@@ -32,10 +32,6 @@ export class CreateArtworkDto {
   artwork_type: string;
 
   @IsOptional()
-  @IsJSON()
-  classification: JSON;
-
-  @IsOptional()
   @IsString()
   medium: string;
 
